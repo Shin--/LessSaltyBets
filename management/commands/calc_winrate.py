@@ -22,5 +22,3 @@ class Command(BaseCommand):
                 character.losses = len(losses)
                 character.wins = len(wins)
                 character.save()
-                print "character %s saved with a winrate of" % character.name, character.winrate, "%."
-        print "done"

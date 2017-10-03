@@ -30,6 +30,12 @@ class Character(SaltyBaseModel):
     winrate = models.FloatField(null=True)
     wins = models.IntegerField(null=True)
     losses = models.IntegerField(null=True)
+    performance = models.FloatField(null=True)
+
+    def __unicode__(self):
+        return u"{name} ({wins}/{losses})".format(  name=self.name,
+                                                    wins=(self.wins if self.wins else 0),
+                                                    losses=(self.losses if self.losses else 0))
 
 
 class SaltyMatch(SaltyBaseModel):
@@ -52,4 +58,5 @@ def update_stock(sender, instance, **kwargs):
                 character.winrate = 100 * (float(len(wins)) / (len(losses) + len(wins)))
                 character.losses = len(losses)
                 character.wins = len(wins)
+                character.performance = (character.wins*character.winrate)/(character.losses or 1)
                 character.save()

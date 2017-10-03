@@ -6,5 +6,5 @@ from .views import *
 
 
 urlpatterns = i18n_patterns(
-    url("^overview$", OverView.as_view()),
+    url("^overview", OverView.as_view()),
 )
