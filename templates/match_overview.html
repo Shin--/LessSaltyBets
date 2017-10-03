@@ -1,0 +1,93 @@
+{% extends "less_salty_bets/base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+Matches Overview
+{% endblock %}
+
+{% block style %}
+
+.active-match {
+    border-radius: 10px;
+    animation: out 8s infinite ease-in-out;
+}
+
+@keyframes out {
+
+0% {background-color: rgb(255, 255, 255)}
+50% {background-color: rgba(77, 189, 40, 0.25)}
+100% {background-color: rgb(255, 255, 255)}
+
+{% endblock %}
+
+
+{% block controls %}
+    <p>
+      <input type="checkbox" id="invalid_matched" />
+      <label for="invalid_matched">Show Invalid Matches</label>
+    </p>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>{% trans "Match #" %}</th>
+                <th>{% trans "Player 1" %}</th>
+                <th>{% trans "Player 2" %}</th>
+                <th>{% trans "Status" %}</th>
+                <th>{% trans "Time" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in object_list %}
+
+            {% if match.status == "finished" %}
+            <tr>
+                <td>#{{ match.match_number }}</td>
+                <td><b><span style="color: {% if match.character1 == match.winner %}#62a515 !important
+                            {% else %}#ca2828 !important{% endif %};">{{ match.character1 }}</span></b></td>
+                <td><b><span style="color: {% if match.character2 == match.winner %}#62a515 !important
+                            {% else %}#ca2828 !important{% endif %};">{{ match.character2 }}</span></b></td>
+                <td>{{ match.status }}</td>
+                <td class="created-at">{{ match.created_at }}</td>
+            </tr>
+            {% elif match.status == "INVALID" %}
+            <tr class="invalid-match hide">
+                <td style="color: #bdbdbd !important;">#{{ match.match_number }}</td>
+                <td style="color: #bdbdbd !important;">{{ match.character1 }}</td>
+                <td style="color: #bdbdbd !important;">{{ match.character2 }}</td>
+                <td style="color: rgba(202,40,40,0.67); font-weight: bold;">{{ match.status }}</td>
+                <td style="color: #bdbdbd !important;">{{ match.created_at }}</td>
+            </tr>
+            {% else %}
+            <tr class="z-depth-1">
+                <td>#{{ match.match_number }}</td>
+                <td>{{ match.character1 }}</td>
+                <td>{{ match.character2 }}</td>
+                <td>{{ match.status }}</td>
+                <td>{{ match.created_at }}</td>
+            </tr>
+            {% endif %}
+
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+$(document).ready(function(){
+});
+
+$('#invalid_matched').click(function(obj){
+    $(this).prop('checked')?$('tr.invalid-match').removeClass('hide'):$('tr.invalid-match').addClass('hide');
+})
+
+</script>
+{% endblock %}

@@ -1,0 +1,65 @@
+
+{% load i18n %}
+{% load static %}
+
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'materialize/css/materialize.min.css' %}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    {% block css %}
+    {% endblock %}
+
+    <style>
+
+        @font-face {
+            font-family: 'Oswald-Bold'; /*a name to be used later*/
+            src: url('{% static "fonts/Oswald/Oswald-Bold.ttf" %}'); /*URL to font*/
+        }
+
+    {% block style %}
+    {% endblock %}
+
+    </style>
+</head>
+<body>
+
+{% block nav %}
+
+    <div class="navbar-fixed">
+        <nav class="grey darken-4">
+            <div class="nav-wrapper">
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/salt/overview/?type=players">Characters</a></li>
+                <li><a href="/salt/overview/?type=matches">Matches</a></li>
+            </ul>
+            </div>
+        </nav>
+    </div>
+
+{% endblock %}
+
+<div class="container">
+    <div class="controls">
+        {% block controls %}
+        {% endblock %}
+    </div>
+</div>
+
+{% block content %}
+{% endblock %}
+
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/moment.js' %}"></script>
+<script src="{% static 'materialize/js/materialize.js' %}"></script>
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>

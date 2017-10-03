@@ -1,0 +1,82 @@
+{% extends "less_salty_bets/base.html" %}
+
+{% load i18n %}
+
+{% block title %}
+Character Overview
+{% endblock %}
+
+
+{% block style %}
+
+.live-pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    animation: out 1.5s infinite ease-out;
+    background: rgba(236, 25, 9, 1);
+    display: inline-block;
+}
+
+@keyframes out {
+    0% {box-shadow: 0px 0px 0px 0px rgba(236, 25, 9, 1);}
+    100% {box-shadow: 0px 0px 0px 12px rgba(236, 25, 9, 0.0);}
+}
+
+.live-text {
+    color: rgba(236, 25, 9, 1);
+    font-weight: bold;
+    padding-right: 10px;
+    padding-left: 20px;
+}
+
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>{% trans "Name" %}</th>
+                <th>{% trans "Wins" %}</th>
+                <th>{% trans "Losses" %}</th>
+                <th>{% trans "Winrate" %}</th>
+                <th>{% trans "Performance (beta)" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if active_match %}
+            <tr class="grey lighten-3">
+                <td>{{ active_match.character1.name }}
+                    <span class="live-text">Live</span>
+                    <span class="live-pulse"></span>
+                </td>
+                <td>{% if active_match.character1.wins %}{{ active_match.character1.wins }}{% else %}0{% endif %}</td>
+                <td>{% if active_match.character1.losses %}{{ active_match.character1.losses }}{% else %}0{% endif %}</td>
+                <td>{% if active_match.character1.winrate %}{{ active_match.character1.winrate|floatformat }}{% else %}0{% endif %}%</td>
+                <td>{% if active_match.character1.winrate %}{{ active_match.character1.performance|floatformat }}{% else %}0{% endif %}</td>
+            </tr>
+            <tr class="grey lighten-3">
+                <td>{{ active_match.character2.name }}
+                    <span class="live-text">Live</span>
+                    <span class="live-pulse"></span>
+                </td>
+                <td>{% if active_match.character2.wins %}{{ active_match.character2.wins }}{% else %}0{% endif %}</td>
+                <td>{% if active_match.character2.losses %}{{ active_match.character2.losses }}{% else %}0{% endif %}</td>
+                <td>{% if active_match.character2.winrate %}{{ active_match.character2.winrate|floatformat }}{% else %}0{% endif %}%</td>
+                <td>{% if active_match.character2.winrate %}{{ active_match.character2.performance|floatformat }}{% else %}0{% endif %}</td>
+            </tr>
+            {% endif %}
+            {% for character in object_list %}
+            <tr>
+                <td>{{ character.name }}</td>
+                <td>{% if character.wins %}{{ character.wins }}{% else %}0{% endif %}</td>
+                <td>{% if character.losses %}{{ character.losses }}{% else %}0{% endif %}</td>
+                <td>{% if character.winrate %}{{ character.winrate|floatformat }}{% else %}0{% endif %}%</td>
+                <td>{% if character.winrate %}{{ character.performance|floatformat }}{% else %}0{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
